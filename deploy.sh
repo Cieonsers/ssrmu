@@ -23,7 +23,7 @@ Notification="${Yellow}[Notification]${Font}"
 
 # addr
 config="/root/shadowsocks/userapiconfig.py"
-Github="https://github.com/tonydan6324/ssrmu.git"
+Github="https://github.com/Cieonsers/ssrmu.git"
 Libsodiumr_file="/usr/local/lib/libsodium.so"
 
 get_ip(){
