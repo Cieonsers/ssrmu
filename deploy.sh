@@ -96,24 +96,27 @@ optimize(){
 
 node_install_start_for_centos(){
 	clear
-	yum -y groupinstall "Development Tools"
-	yum install unzip zip ntpdate git iptables -y
+    yum clean all && rm -rf /var/cache/yum && yum update -y
+	yum install epel-release -y && yum makecache
+    yum install git net-tools htop ntp -y
+    yum install libsodium -y
+    yum install python36 python36-pip -y
 	yum update nss curl iptables -y
-	wget --no-check-certificate https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz
-	tar xf libsodium-1.0.18.tar.gz && cd libsodium-1.0.18
-	./configure && make -j2 && make install
-	echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
-	ldconfig
-	clear
-	[[ ! -e ${Libsodiumr_file} ]] && echo -e "${Error} Failed to install libsodium  !" && exit 1
-	echo && echo -e "${Info} Successfully installed libsodium  !" && echo
+	# wget --no-check-certificate https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz
+	# tar xf libsodium-1.0.18.tar.gz && cd libsodium-1.0.18
+	# ./configure && make -j2 && make install
+	# echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+	# ldconfig
+	# clear
+	# [[ ! -e ${Libsodiumr_file} ]] && echo -e "${Error} Failed to install libsodium  !" && exit 1
+	# echo && echo -e "${Info} Successfully installed libsodium  !" && echo
 	cd /root
-	yum -y install python-setuptools
-	easy_install pip
+	# yum -y install python-setuptools
+	# easy_install pip
 	git clone ${Github} "/root/shadowsocks"
 	cd shadowsocks
-	pip install -r requirements.txt
-	pip install cymysql
+	pip3 install -r requirements.txt
+	pip3 install cymysql
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 }
@@ -130,11 +133,11 @@ node_install_start_for_debian(){
 	[[ ! -e ${Libsodiumr_file} ]] && echo -e "${Error} Failed to install libsodium !" && exit 1
 	echo && echo -e "${Info} Successfully installed libsodium !" && echo
 	cd /root
-	apt-get install python-pip -y
+	apt-get install python3 python3-pip -y
 	git clone ${Github} "/root/shadowsocks"
 	cd shadowsocks
-	pip install -r requirements.txt
-	pip install cymysql
+	pip3 install -r requirements.txt
+	pip3 install cymysql
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 }
@@ -191,8 +194,8 @@ api_old(){
 		exit 1
 	fi
 	cd "/root/${NODE_LIST}"
-	pip install -r requirements.txt
-	pip install cymysql
+	pip3 install -r requirements.txt
+	pip3 install cymysql
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 	cp ssr.service ${NODE_LIST}.service
@@ -285,8 +288,8 @@ db_old(){
 		exit 1
 	fi
 	cd "/root/${NODE_LIST}"
-	pip install -r requirements.txt
-	pip install cymysql
+	pip3 install -r requirements.txt
+	pip3 install cymysql
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 	cp ssr.service ${NODE_LIST}.service
